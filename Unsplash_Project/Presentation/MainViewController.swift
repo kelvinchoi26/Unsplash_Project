@@ -6,14 +6,18 @@
 //
 
 import UIKit
+import RxSwift
+import Alamofire
 
 final class MainViewController: BaseViewController {
     
     //MARK: Properties
+    private let viewModel = PhotoSearchViewModel()
     
     // MARK: Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
     // MARK: Configures
@@ -22,4 +26,5 @@ final class MainViewController: BaseViewController {
         
         view.backgroundColor = .red
     }
+    
 }
