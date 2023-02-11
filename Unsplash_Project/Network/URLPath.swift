@@ -12,10 +12,13 @@ struct URLPath {
 }
 
 enum EndpointPath {
+    case photoList
     case searchPhoto
     
     var path: String {
         switch self {
+        case .photoList:
+            return "/photos"
         case .searchPhoto:
             return "/search/photos?query="
         }

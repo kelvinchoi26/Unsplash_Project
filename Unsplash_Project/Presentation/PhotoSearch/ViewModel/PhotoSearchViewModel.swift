@@ -12,11 +12,11 @@ class PhotoSearchViewModel {
     private let query = BehaviorSubject<String>(value: "")
     private let service = UnsplashService.shared
     
-    var photos: Observable<[Photo]> {
-        return query.flatMapLatest { query in
-            self.service.searchPhotos(with: query)
-        }
-    }
+//    var photos: Observable<[Photo]> {
+//        return query.flatMapLatest { query in
+//            self.service.searchPhotos(with: query)
+//        }
+//    }
     
     func search(query: String) {
         self.query.onNext(query)

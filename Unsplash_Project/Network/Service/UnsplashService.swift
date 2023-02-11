@@ -7,7 +7,6 @@
 
 import Foundation
 import Alamofire
-import RxSwift
 
 final class UnsplashService {
     
@@ -16,28 +15,25 @@ final class UnsplashService {
     
     private init() {}
     
-    func searchPhotos(with query: String) -> Observable<PhotoSearchRequestDTO> {
-        return Observable.create { observer in
-            guard let url = URL(string: URLPath.baseURL + query) else { return }
-            let header: HTTPHeaders = ["Authorization": "Client-ID " + APIKey.accessKey]
-            let request = AF.request(url, headers: header)
-            
-            request.responseDecodable(of: PhotoSearchResponseDTO.self) { response in
-                switch response.result {
-                case .success(let result):
-                    observer.onNext(result.results)
-                    observer.onCompleted()
-                case .failure(let error):
-                    observer.onError(error)
+    func fetchPhotoList(
+        with request: PhotoListRequestDTO,
+        completion: @escaping (Result<[PhotoListResponseDTO], NetworkError>) -> Void
+    ) {
+        let urlPath = URLPath.baseURL + EndpointPath.photoList.path
+        guard let parameter = try? request.toDictionary() else { return }
+        let headers: HTTPHeaders = ["Authorization": "Client-ID 7rTmBJz__MBYAh7KyK-XKGyEbQPb3o5ui-cuR3U-toA"]
+        
+        AF.request(urlPath, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: headers)
+            .validate(statusCode: 200...299)
+            .responseDecodable(of: [PhotoListResponseDTO].self) { result in
+                switch result.result {
+                case .success(let data):
+                    completion(.success(data))
+                    
+                case .failure:
+                    completion(.failure(.decodeError))
                 }
             }
-            
-            return Disposables.create {
-                // Request 취소
-                request.cancel()
-            }
-        }
-        
     }
     
 }

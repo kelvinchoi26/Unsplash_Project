@@ -18,6 +18,7 @@ final class MainViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(UnsplashService.shared.searchPhotos(with: "hello"))
     }
     
     // MARK: Configures
