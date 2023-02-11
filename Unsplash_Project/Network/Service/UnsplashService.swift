@@ -29,7 +29,6 @@ final class UnsplashService {
                 switch result.result {
                 case .success(let data):
                     completion(.success(data))
-                    
                 case .failure:
                     completion(.failure(.decodeError))
                 }

@@ -15,7 +15,7 @@ struct PhotoListResponseDTO: Decodable {
 }
 
 extension PhotoListResponseDTO {
-    func toDomain() -> Photo {
+    func returnPhoto() -> Photo {
         return Photo(id: id, url: URL(string: urls.small)!)
     }
 }

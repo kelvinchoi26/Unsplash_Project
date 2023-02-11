@@ -7,21 +7,22 @@
 
 import UIKit
 import RxSwift
-import Alamofire
+import RxCocoa
+import Kingfisher
 
 final class MainViewController: BaseViewController {
     
-    //MARK: Properties
+    //MARK: - Properties
     private let viewModel = PhotoSearchViewModel()
     
-    // MARK: Lifecycles
+    // MARK: - Lifecycles
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(UnsplashService.shared.searchPhotos(with: "hello"))
     }
     
-    // MARK: Configures
+    // MARK: - Configures
     override func setAttributes() {
         super.setAttributes()
         
