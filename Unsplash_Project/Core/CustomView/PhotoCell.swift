@@ -15,6 +15,7 @@ final class PhotoCell: UICollectionViewCell {
         super.init(frame: frame)
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 5
         contentView.addSubview(imageView)
     }
     

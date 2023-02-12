@@ -9,6 +9,12 @@ import UIKit
 
 final class MainView: BaseView {
     
+    // MARK: - Properties
+    /// <SectionIdentifierType, ItemIdentifierType>
+    /// <Section, Row에 들어갈 아이템>
+    /// Model 기반
+    private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
+    
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
     // MARK: - Attributes
@@ -55,6 +61,26 @@ extension MainView {
         
         let layout = UICollectionViewCompositionalLayout(section: section)
         return layout
+    }
+    
+//    func configureDataSource(collectionView: UICollectionView) {
+//        let diffableDataSource = UICollectionViewDiffableDataSource<Section, Int>(collectionView: collectionView) { (collectionView, indexPath, item) -> UICollectionViewCell? in
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+//            // Configure the cell
+//            return cell
+//        }
+//        collectionView.dataSource = diffableDataSource
+//    }
+    
+//    func applySnapshot(collectionView: UICollectionView) {
+//        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
+//        snapshot.appendSections([.main])
+//        snapshot.appendItems(Array(0..<5))
+//        diffableDataSource.apply(snapshot, animatingDifferences: false)
+//    }
+    
+    enum Section {
+        case main
     }
 }
 

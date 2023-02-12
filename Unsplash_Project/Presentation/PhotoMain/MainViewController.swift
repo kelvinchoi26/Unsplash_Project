@@ -50,6 +50,10 @@ final class MainViewController: BaseViewController {
                 cell.imageView.kf.setImage(with: element.url)
             }
             .disposed(by: disposeBag)
+        
+        output.navigationTitle
+            .drive(self.rx.title)
+            .disposed(by: disposeBag)
     }
 
 }

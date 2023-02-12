@@ -39,7 +39,6 @@
 		1EA411E02997DC84008C48D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411DF2997DC84008C48D3 /* ViewModelType.swift */; };
 		1EA411E3299811B2008C48D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1EA411E2299811B2008C48D3 /* Kingfisher */; };
 		1EA411E52998B6B9008C48D3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E42998B6B9008C48D3 /* MainView.swift */; };
-		1EA411E72998C14B008C48D3 /* GridFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */; };
 		1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E82998C495008C48D3 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -72,7 +71,6 @@
 		1EA411DD2997C04D008C48D3 /* PhotoListResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListResponseDTO.swift; sourceTree = "<group>"; };
 		1EA411DF2997DC84008C48D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		1EA411E42998B6B9008C48D3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
-		1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFlowLayout.swift; sourceTree = "<group>"; };
 		1EA411E82998C495008C48D3 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -267,7 +265,6 @@
 			isa = PBXGroup;
 			children = (
 				1EA411E42998B6B9008C48D3 /* MainView.swift */,
-				1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -413,7 +410,6 @@
 				1EA411D72997B3B3008C48D3 /* PhotoListViewModel.swift in Sources */,
 				1EA4119C299397C6008C48D3 /* BaseViewController.swift in Sources */,
 				1EA411E02997DC84008C48D3 /* ViewModelType.swift in Sources */,
-				1EA411E72998C14B008C48D3 /* GridFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
