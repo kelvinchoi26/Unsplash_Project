@@ -38,6 +38,9 @@
 		1EA411DE2997C04D008C48D3 /* PhotoListResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411DD2997C04D008C48D3 /* PhotoListResponseDTO.swift */; };
 		1EA411E02997DC84008C48D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411DF2997DC84008C48D3 /* ViewModelType.swift */; };
 		1EA411E3299811B2008C48D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1EA411E2299811B2008C48D3 /* Kingfisher */; };
+		1EA411E52998B6B9008C48D3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E42998B6B9008C48D3 /* MainView.swift */; };
+		1EA411E72998C14B008C48D3 /* GridFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */; };
+		1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E82998C495008C48D3 /* PhotoCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,6 +71,9 @@
 		1EA411DB2997C042008C48D3 /* PhotoListRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListRequestDTO.swift; sourceTree = "<group>"; };
 		1EA411DD2997C04D008C48D3 /* PhotoListResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoListResponseDTO.swift; sourceTree = "<group>"; };
 		1EA411DF2997DC84008C48D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		1EA411E42998B6B9008C48D3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridFlowLayout.swift; sourceTree = "<group>"; };
+		1EA411E82998C495008C48D3 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,7 +142,6 @@
 			children = (
 				1EA411D32997B380008C48D3 /* PhotoMain */,
 				1EA411CE2995637F008C48D3 /* PhotoSearch */,
-				1EA4119729939769008C48D3 /* MainViewController.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -156,6 +161,7 @@
 			children = (
 				1EA4119B299397C6008C48D3 /* BaseViewController.swift */,
 				1EA411A229939A04008C48D3 /* BaseView.swift */,
+				1EA411E82998C495008C48D3 /* PhotoCell.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -242,6 +248,7 @@
 		1EA411D32997B380008C48D3 /* PhotoMain */ = {
 			isa = PBXGroup;
 			children = (
+				1EA4119729939769008C48D3 /* MainViewController.swift */,
 				1EA411D52997B39C008C48D3 /* View */,
 				1EA411D42997B395008C48D3 /* ViewModel */,
 			);
@@ -259,6 +266,8 @@
 		1EA411D52997B39C008C48D3 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1EA411E42998B6B9008C48D3 /* MainView.swift */,
+				1EA411E62998C14B008C48D3 /* GridFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -385,9 +394,11 @@
 				1EA411D2299563A5008C48D3 /* PhotoSearchViewModel.swift in Sources */,
 				1EA411BF2994B368008C48D3 /* UnsplashService.swift in Sources */,
 				1EA4117F29938532008C48D3 /* ViewController.swift in Sources */,
+				1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */,
 				1EA41195299389D9008C48D3 /* MainCoordinator.swift in Sources */,
 				1EA411B72993ADAF008C48D3 /* APIKey.swift in Sources */,
 				1EA4117B29938532008C48D3 /* AppDelegate.swift in Sources */,
+				1EA411E52998B6B9008C48D3 /* MainView.swift in Sources */,
 				1EA411CD299557E2008C48D3 /* PhotoList.swift in Sources */,
 				1EA4117D29938532008C48D3 /* SceneDelegate.swift in Sources */,
 				1EA411DE2997C04D008C48D3 /* PhotoListResponseDTO.swift in Sources */,
@@ -402,6 +413,7 @@
 				1EA411D72997B3B3008C48D3 /* PhotoListViewModel.swift in Sources */,
 				1EA4119C299397C6008C48D3 /* BaseViewController.swift in Sources */,
 				1EA411E02997DC84008C48D3 /* ViewModelType.swift in Sources */,
+				1EA411E72998C14B008C48D3 /* GridFlowLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -27,19 +27,23 @@ class BaseViewController: UIViewController {
     }
     
     // MARK: - Overridden Functions
+    override func loadView() {
+        super.loadView()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setAttributes()
-        setConstraints()
+
         bind()
     }
 
     // MARK: - Attributes
-    func setAttributes() {}
-    
-    // MARK: - Constraints
-    func setConstraints() {}
+    func setAttributes() {
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationBar.tintColor = .black
+    }
     
     // MARK: - Bind
     func bind() {}

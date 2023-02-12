@@ -19,11 +19,13 @@ final class PhotoListViewModel: ViewModelType {
     struct Input { }
     
     struct Output {
+        let navigationTitle: Driver<String>
         let photos: Driver<[Photo]>
     }
     
     // MARK: - Transform
     func transform(input: Input) -> Output {
+        let navigationTitle = BehaviorRelay(value: "How's your day?").asDriver()
         let photos = PublishSubject<[Photo]>()
         
         fetchPhotos()
@@ -34,7 +36,7 @@ final class PhotoListViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        return Output(photos: photos.asDriver(onErrorJustReturn: []))
+        return Output(navigationTitle: navigationTitle, photos: photos.asDriver(onErrorJustReturn: []))
     }
     
     // traits -> main thread에서 실행됨, error 이벤트 없음
