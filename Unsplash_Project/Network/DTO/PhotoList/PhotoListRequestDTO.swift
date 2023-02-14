@@ -25,12 +25,3 @@ enum OrderBy: String, Encodable {
     case oldest
     case popular
 }
-
-extension PhotoListRequestDTO {
-    // 인코딩한 RequestDTO 객체를 JSON 데이터로 변환!
-    func toDictionary() throws -> [String: Any]? {
-        let data = try JSONEncoder().encode(self)
-        let jsonData = try JSONSerialization.jsonObject(with: data)
-        return jsonData as? [String: Any]
-    }
-}

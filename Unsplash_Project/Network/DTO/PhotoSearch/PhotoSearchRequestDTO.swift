@@ -7,14 +7,14 @@
 
 import Foundation
 
-//struct PhotoSearchRequestDTO: Codable {
-//    let query: String
-//    let page: Int
-//    let perPage: Int
-//    
-//    enum CodingKeys: CodingKey {
-//        case query
-//        case page
-//        case perPage
-//    }
-//}
+struct PhotoSearchRequestDTO: Codable {
+    let query: String
+    let page: Int
+    let perPage: Int = 20
+    
+    enum CodingKeys: CodingKey {
+        case query
+        case page
+        case perPage
+    }
+}

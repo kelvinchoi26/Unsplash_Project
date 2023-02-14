@@ -7,19 +7,33 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
-class PhotoSearchViewModel {
+final class PhotoSearchViewModel {
+    
+    // MARK: - Properties
     private let query = BehaviorSubject<String>(value: "")
     private let service = UnsplashService.shared
+    private var page: Int = 0
     
-//    var photos: Observable<[Photo]> {
-//        return query.flatMapLatest { query in
-//            self.service.searchPhotos(with: query)
-//        }
-//    }
+    var navigationTitle = BehaviorRelay(value: "오늘의 기분을 검색하세요")
     
-    func search(query: String) {
-        self.query.onNext(query)
+    var photos = BehaviorRelay<[Photo]>(value: [])
+    
+    // MARK: - Methods
+    func fetchSearchedPhotos(query: String) {
+        let request = PhotoSearchRequestDTO(query: query, page: page)
+        
+        UnsplashService.shared.fetchSearchedPhoto(with: request) { result in
+            switch result {
+            case .success(let data):
+                let photos = data.returnSearchedPhotos()
+                self.photos.accept(photos)
+                
+            case .failure(let error):
+                print("Error fetching searched photos: \(error.localizedDescription)")
+            }
+        }
     }
     
 }

@@ -1,8 +1,8 @@
 //
-//  MainViewController.swift
+//  PhotoSearchViewController.swift
 //  Unsplash_Project
 //
-//  Created by 최형민 on 2023/02/08.
+//  Created by 최형민 on 2023/02/14.
 //
 
 import UIKit
@@ -10,21 +10,19 @@ import RxSwift
 import RxCocoa
 import Kingfisher
 
-final class MainViewController: BaseViewController {
+final class PhotoSearchViewController: BaseViewController {
     
     //MARK: - Properties
-    private let viewModel = PhotoListViewModel()
+    private let viewModel = PhotoSearchViewModel()
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
     private var loadingView: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
-    
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: self.createLayout()
     )
+    private let searchBar = UISearchBar()
     
-    private let searchBarButtonItem = UIBarButtonItem(systemItem: .search)
-    
-    private var coordinator: MainCoordinator?
+    weak var coordinator: SearchCoordinator?
     
     // MARK: - Lifecycles
     
@@ -40,7 +38,6 @@ final class MainViewController: BaseViewController {
             $0.view.backgroundColor = .systemBackground
             $0.navigationController?.navigationBar.prefersLargeTitles = true
             $0.navigationController?.navigationBar.tintColor = .black
-            $0.navigationItem.rightBarButtonItems = [searchBarButtonItem]
         }
         
         collectionView.do {
@@ -52,15 +49,20 @@ final class MainViewController: BaseViewController {
             $0.hidesWhenStopped = true
         }
         
-        [collectionView, loadingView].forEach {
+        [searchBar, collectionView, loadingView].forEach {
             self.view.addSubview($0)
         }
     }
     
     // MARK: - Constraints
     override func setConstraints() {
+        searchBar.snp.makeConstraints {
+            $0.top.directionalHorizontalEdges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
         collectionView.snp.makeConstraints {
-            $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+            $0.top.equalTo(searchBar.snp.bottom)
+            $0.directionalHorizontalEdges.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         
         loadingView.snp.makeConstraints {
@@ -70,47 +72,36 @@ final class MainViewController: BaseViewController {
     
     // MARK: - Bind
     override func bind() {
-        super.bind()
+        searchBar.rx.text.orEmpty
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .distinctUntilChanged()
+            .asDriver(onErrorJustReturn: "")
+            .drive { query in
+                self.viewModel.fetchSearchedPhotos(query: query)
+            }
+            .disposed(by: disposeBag)
         
-        let input = PhotoListViewModel.Input(searchButtonTap: searchBarButtonItem.rx.tap)
-        let output = viewModel.transform(input: input)
+        viewModel.navigationTitle
+            .bind(to: self.rx.title)
+            .disposed(by: disposeBag)
         
-        output.photos
-            .asDriver(onErrorJustReturn: [])
-            .drive(onNext: { [weak self] photos in
-                guard let self = self else { return }
+        viewModel.photos
+            .withUnretained(self)
+            .bind { viewController, photos in
                 self.loadingView.stopAnimating() // 로딩 애니메이션 종료
                 var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
                 snapshot.appendSections([0])
                 snapshot.appendItems(photos)
-                self.diffableDataSource?.apply(snapshot, animatingDifferences: true)
-            })
+                viewController.diffableDataSource?.apply(snapshot, animatingDifferences: true)
+            }
             .disposed(by: disposeBag)
         
         // 로딩 애니메이션 시작
         loadingView.startAnimating()
-        
-        output.navigationTitle
-            .drive(self.rx.title)
-            .disposed(by: disposeBag)
-        
-        output.searchButtonTap
-            .withUnretained(self)
-            .bind { vc, _ in
-                vc.pushSearchVC()
-            }
-            .disposed(by: disposeBag)
-        
     }
-
 }
 
-extension MainViewController {
-    private func pushSearchVC() {
-        let viewController = PhotoSearchViewController()
-        navigationController?.pushViewController(viewController, animated: true)
-    }
-    
+extension PhotoSearchViewController {
     func createLayout() -> UICollectionViewLayout {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)

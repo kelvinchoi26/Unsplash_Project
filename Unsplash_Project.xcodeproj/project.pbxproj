@@ -40,6 +40,9 @@
 		1EA411E3299811B2008C48D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 1EA411E2299811B2008C48D3 /* Kingfisher */; };
 		1EA411E52998B6B9008C48D3 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E42998B6B9008C48D3 /* MainView.swift */; };
 		1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411E82998C495008C48D3 /* PhotoCell.swift */; };
+		1EA411EB299BBF77008C48D3 /* Encodable+toDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411EA299BBF77008C48D3 /* Encodable+toDictionary.swift */; };
+		1EA411ED299BC789008C48D3 /* PhotoSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411EC299BC789008C48D3 /* PhotoSearchViewController.swift */; };
+		1EA411F2299C053C008C48D3 /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA411F1299C053C008C48D3 /* SearchCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +75,9 @@
 		1EA411DF2997DC84008C48D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		1EA411E42998B6B9008C48D3 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		1EA411E82998C495008C48D3 /* PhotoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoCell.swift; sourceTree = "<group>"; };
+		1EA411EA299BBF77008C48D3 /* Encodable+toDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Encodable+toDictionary.swift"; sourceTree = "<group>"; };
+		1EA411EC299BC789008C48D3 /* PhotoSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoSearchViewController.swift; sourceTree = "<group>"; };
+		1EA411F1299C053C008C48D3 /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,7 +153,7 @@
 		1EA411992993979B008C48D3 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				1EA41194299389D9008C48D3 /* MainCoordinator.swift */,
+				1EA411EE299BF87D008C48D3 /* Coordinator */,
 				1EA411DF2997DC84008C48D3 /* ViewModelType.swift */,
 				1EA4119A299397A5008C48D3 /* CustomView */,
 			);
@@ -179,6 +185,7 @@
 				1EA411B92993B393008C48D3 /* DTO */,
 				1EA411C02994BF61008C48D3 /* NetworkError.swift */,
 				1EA411C829954FF7008C48D3 /* URLPath.swift */,
+				1EA411EA299BBF77008C48D3 /* Encodable+toDictionary.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -224,6 +231,7 @@
 			children = (
 				1EA411D02995638B008C48D3 /* ViewModel */,
 				1EA411CF29956387008C48D3 /* View */,
+				1EA411EC299BC789008C48D3 /* PhotoSearchViewController.swift */,
 			);
 			path = PhotoSearch;
 			sourceTree = "<group>";
@@ -276,6 +284,15 @@
 				1EA411DD2997C04D008C48D3 /* PhotoListResponseDTO.swift */,
 			);
 			path = PhotoList;
+			sourceTree = "<group>";
+		};
+		1EA411EE299BF87D008C48D3 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				1EA41194299389D9008C48D3 /* MainCoordinator.swift */,
+				1EA411F1299C053C008C48D3 /* SearchCoordinator.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +409,7 @@
 				1EA411BF2994B368008C48D3 /* UnsplashService.swift in Sources */,
 				1EA4117F29938532008C48D3 /* ViewController.swift in Sources */,
 				1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */,
+				1EA411ED299BC789008C48D3 /* PhotoSearchViewController.swift in Sources */,
 				1EA41195299389D9008C48D3 /* MainCoordinator.swift in Sources */,
 				1EA411B72993ADAF008C48D3 /* APIKey.swift in Sources */,
 				1EA4117B29938532008C48D3 /* AppDelegate.swift in Sources */,
@@ -400,9 +418,11 @@
 				1EA4117D29938532008C48D3 /* SceneDelegate.swift in Sources */,
 				1EA411DE2997C04D008C48D3 /* PhotoListResponseDTO.swift in Sources */,
 				1EA411D92997B81C008C48D3 /* URLs.swift in Sources */,
+				1EA411F2299C053C008C48D3 /* SearchCoordinator.swift in Sources */,
 				1EA411CB29955250008C48D3 /* PhotoSearchResponseDTO.swift in Sources */,
 				1EA411A329939A04008C48D3 /* BaseView.swift in Sources */,
 				1EA411BC2993B787008C48D3 /* PhotoSearchRequestDTO.swift in Sources */,
+				1EA411EB299BBF77008C48D3 /* Encodable+toDictionary.swift in Sources */,
 				1EA4119829939769008C48D3 /* MainViewController.swift in Sources */,
 				1EA411DC2997C042008C48D3 /* PhotoListRequestDTO.swift in Sources */,
 				1EA411C929954FF7008C48D3 /* URLPath.swift in Sources */,

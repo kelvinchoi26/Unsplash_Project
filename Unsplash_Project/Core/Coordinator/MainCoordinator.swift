@@ -20,7 +20,7 @@ class MainCoordinator: Coordinator {
     // MARK: - Properties
     let window: UIWindow
     
-    var childCoordinators: [Coordinator] = []
+    var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     
     // MARK: - Initializers
@@ -35,5 +35,19 @@ class MainCoordinator: Coordinator {
         let navigationRootViewController = UINavigationController(rootViewController: rootViewController)
         window.rootViewController = navigationRootViewController
         window.makeKeyAndVisible()
+    }
+    
+    // parent와 child coordinator 관계 설정
+    func searchSubscription() {
+        let child = SearchCoordinator(navigationController: navigationController)
+        
+        // SearchCoordiantor의 parent coordinator로 MainCoordinator 설정
+        child.parentCoordinator = self
+        
+        // child coordinator 을 저장하는 배열에 저장
+        childCoordinators.append(child)
+        
+        // PhotoSearchViewController 로 화면전환
+        child.start()
     }
 }

@@ -35,4 +35,24 @@ final class UnsplashService {
             }
     }
     
+    func fetchSearchedPhoto(
+        with request: PhotoSearchRequestDTO,
+        completion: @escaping (Result<PhotoSearchResponseDTO, NetworkError>) -> Void
+    ) {
+        let urlPath = URLPath.baseURL + EndpointPath.photoList.path
+        guard let parameter = try? request.toDictionary() else { return }
+        let headers: HTTPHeaders = ["Authorization": APIKey.accessKey]
+        
+        AF.request(urlPath, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: headers)
+            .validate(statusCode: 200...299)
+            .responseDecodable(of: PhotoSearchResponseDTO.self) { result in
+                switch result.result {
+                case .success(let data):
+                    completion(.success(data))
+                    
+                case .failure:
+                    completion(.failure(.decodeError))
+                }
+            }
+    }
 }

@@ -16,9 +16,15 @@ final class PhotoListViewModel: ViewModelType {
     var currentPage = BehaviorSubject<Int>(value: 0)
     var perPage = 20
     
-    struct Input { }
+    struct Input {
+        // 검색 버튼 클릭 이벤트
+        let searchButtonTap: ControlEvent<Void>
+    }
     
     struct Output {
+        // 이벤트 처리
+        let searchButtonTap: ControlEvent<Void>
+        
         let navigationTitle: Driver<String>
         let photos: Driver<[Photo]>
     }
@@ -39,7 +45,7 @@ final class PhotoListViewModel: ViewModelType {
             })
             .disposed(by: disposeBag)
         
-        return Output(navigationTitle: navigationTitle, photos: photos.asDriver(onErrorJustReturn: []))
+        return Output(searchButtonTap: input.searchButtonTap, navigationTitle: navigationTitle, photos: photos.asDriver(onErrorJustReturn: []))
     }
     
     // traits -> main thread에서 실행됨, error 이벤트 없음
