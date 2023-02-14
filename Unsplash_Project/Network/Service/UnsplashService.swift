@@ -21,7 +21,7 @@ final class UnsplashService {
     ) {
         let urlPath = URLPath.baseURL + EndpointPath.photoList.path
         guard let parameter = try? request.toDictionary() else { return }
-        let headers: HTTPHeaders = ["Authorization": "Client-ID 7rTmBJz__MBYAh7KyK-XKGyEbQPb3o5ui-cuR3U-toA"]
+        let headers: HTTPHeaders = ["Authorization": APIKey.accessKey]
         
         AF.request(urlPath, method: .get, parameters: parameter, encoding: URLEncoding.default, headers: headers)
             .validate(statusCode: 200...299)

@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import RxSwift
 
 struct PhotoListRequestDTO: Encodable {
-    let page: Int
-    var perPage: Int = 10
+    var page: Int
+    var perPage: Int = 20
     var orderBy: OrderBy = .latest
-
+    
     enum CodingKeys: String, CodingKey {
         case page
         case perPage = "per_page"

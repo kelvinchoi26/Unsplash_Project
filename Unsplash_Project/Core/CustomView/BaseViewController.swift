@@ -35,6 +35,7 @@ class BaseViewController: UIViewController {
         super.viewDidLoad()
         
         setAttributes()
+        setConstraints()
 
         bind()
     }
@@ -44,6 +45,9 @@ class BaseViewController: UIViewController {
         self.navigationController?.navigationBar.prefersLargeTitles = true
         self.navigationController?.navigationBar.tintColor = .black
     }
+    
+    // MARK: - Constraints
+    func setConstraints() {}
     
     // MARK: - Bind
     func bind() {}
