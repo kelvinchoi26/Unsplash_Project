@@ -15,6 +15,7 @@ final class MainViewController: BaseViewController {
     //MARK: - Properties
     private let viewModel = PhotoListViewModel()
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
+    private var loadingView: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     
@@ -38,13 +39,24 @@ final class MainViewController: BaseViewController {
             $0.register(PhotoCell.self, forCellWithReuseIdentifier: "PhotoCell")
         }
         
-        self.view.addSubview(collectionView)
+        loadingView.do {
+            $0.color = .gray
+            $0.hidesWhenStopped = true
+        }
+        
+        [collectionView, loadingView].forEach {
+            self.view.addSubview($0)
+        }
     }
     
     // MARK: - Constraints
     override func setConstraints() {
         collectionView.snp.makeConstraints {
             $0.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        
+        loadingView.snp.makeConstraints {
+            $0.center.equalToSuperview()
         }
     }
     
@@ -59,12 +71,16 @@ final class MainViewController: BaseViewController {
             .asDriver(onErrorJustReturn: [])
             .drive(onNext: { [weak self] photos in
                 guard let self = self else { return }
+                self.loadingView.stopAnimating() // 로딩 애니메이션 종료
                 var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
                 snapshot.appendSections([0])
                 snapshot.appendItems(photos)
                 self.diffableDataSource?.apply(snapshot, animatingDifferences: true)
             })
             .disposed(by: disposeBag)
+        
+        // 로딩 애니메이션 시작
+        loadingView.startAnimating()
         
         output.navigationTitle
             .drive(self.rx.title)
