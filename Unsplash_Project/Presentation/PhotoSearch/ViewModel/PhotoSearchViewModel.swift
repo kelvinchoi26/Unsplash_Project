@@ -14,18 +14,19 @@ final class PhotoSearchViewModel {
     // MARK: - Properties
     private var query = ""
     private let service = UnsplashService.shared
-    private var page: Int = 0
+    var page: Int = 0
     
     var navigationTitle = BehaviorRelay(value: "오늘의 기분을 검색하세요")
     
     var photos = BehaviorRelay<[Photo]>(value: [])
     
     // MARK: - Methods
-    func fetchSearchedPhotos(query: String) {
-        print(query)
-        
+    func fetchSearchedPhotos(query: String, page: Int) {
         let request = PhotoSearchRequestDTO(query: query, page: page)
-        print(request)
+        
+        self.query = query
+        self.page = page
+
         UnsplashService.shared.fetchSearchedPhoto(with: request) { result in
             switch result {
             case .success(let data):
@@ -37,4 +38,8 @@ final class PhotoSearchViewModel {
         }
     }
     
+    func fetchNextPageOfPhotos(query: String) {
+        page += 1
+        fetchSearchedPhotos(query: query, page: page)
+    }
 }

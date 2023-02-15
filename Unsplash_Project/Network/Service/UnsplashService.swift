@@ -40,7 +40,7 @@ final class UnsplashService {
         completion: @escaping (Result<PhotoSearchResponseDTO, NetworkError>) -> Void
     ) {
         let urlPath = URLPath.baseURL + EndpointPath.searchPhoto.path
-        print(urlPath)
+
         guard let parameter = try? request.toDictionary() else { return }
         let headers: HTTPHeaders = ["Authorization": APIKey.accessKey]
         

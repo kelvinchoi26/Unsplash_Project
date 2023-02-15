@@ -12,10 +12,6 @@ import Kingfisher
 
 final class PhotoSearchViewController: BaseViewController {
     
-    deinit {
-        print("deinit!!!")
-    }
-    
     //MARK: - Properties
     private let viewModel = PhotoSearchViewModel()
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
@@ -27,6 +23,9 @@ final class PhotoSearchViewController: BaseViewController {
     private let searchBar = UISearchBar()
     
     weak var coordinator: SearchCoordinator?
+    
+    // true인 경우: page 끝까지 scroll시 pagination 구현
+    private var isFetchingMore = false
     
     // MARK: - Lifecycles
     
@@ -78,12 +77,19 @@ final class PhotoSearchViewController: BaseViewController {
     override func bind() {
         viewModel.photos
             .withUnretained(self)
-            .bind { viewController, photos in
+            .bind { vc, photos in
                 self.loadingView.stopAnimating() // 로딩 애니메이션 종료
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
-                snapshot.appendSections([0])
-                snapshot.appendItems(photos)
-                viewController.diffableDataSource?.apply(snapshot, animatingDifferences: true)
+                
+                var snapshot = vc.diffableDataSource?.snapshot()
+
+                if snapshot == nil {
+                    snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
+                    snapshot?.appendSections([0])
+                }
+                
+                snapshot?.appendItems(photos)
+                vc.diffableDataSource?.apply(snapshot ?? NSDiffableDataSourceSnapshot<Int, Photo>(), animatingDifferences: true)
+                self.isFetchingMore = false // pagination를 위한 flag
             }
             .disposed(by: disposeBag)
         
@@ -91,14 +97,16 @@ final class PhotoSearchViewController: BaseViewController {
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
             .asDriver(onErrorJustReturn: "")
-            .drive { query in
-                self.viewModel.fetchSearchedPhotos(query: query)
+            .drive { [weak self] query in
+                self?.viewModel.fetchSearchedPhotos(query: query, page: self?.viewModel.page ?? 0)
             }
             .disposed(by: disposeBag)
         
         viewModel.navigationTitle
             .bind(to: self.rx.title)
             .disposed(by: disposeBag)
+        
+        collectionView.rx.setDelegate(self).disposed(by: disposeBag)
         
         // 로딩 애니메이션 시작
         loadingView.startAnimating()
@@ -134,6 +142,25 @@ extension PhotoSearchViewController {
             cell.imageView.kf.indicatorType = .activity
             cell.imageView.kf.setImage(with: photo.url)
             return cell
+        }
+        
+        var initialSnapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
+        initialSnapshot.appendSections([0])
+        diffableDataSource?.apply(initialSnapshot, animatingDifferences: false)
+    }
+}
+
+extension PhotoSearchViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetY = scrollView.contentOffset.y
+        let contentHeight = scrollView.contentSize.height
+        let screenHeight = scrollView.frame.size.height
+        
+        if offsetY > contentHeight - screenHeight {
+            if !isFetchingMore {
+                isFetchingMore = true
+                viewModel.fetchNextPageOfPhotos(query: searchBar.text ?? "")
+            }
         }
     }
 }
