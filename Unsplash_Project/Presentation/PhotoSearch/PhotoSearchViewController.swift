@@ -12,6 +12,10 @@ import Kingfisher
 
 final class PhotoSearchViewController: BaseViewController {
     
+    deinit {
+        print("deinit!!!")
+    }
+    
     //MARK: - Properties
     private let viewModel = PhotoSearchViewModel()
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
@@ -72,6 +76,17 @@ final class PhotoSearchViewController: BaseViewController {
     
     // MARK: - Bind
     override func bind() {
+        viewModel.photos
+            .withUnretained(self)
+            .bind { viewController, photos in
+                self.loadingView.stopAnimating() // 로딩 애니메이션 종료
+                var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
+                snapshot.appendSections([0])
+                snapshot.appendItems(photos)
+                viewController.diffableDataSource?.apply(snapshot, animatingDifferences: true)
+            }
+            .disposed(by: disposeBag)
+        
         searchBar.rx.text.orEmpty
             .debounce(.seconds(1), scheduler: MainScheduler.instance)
             .distinctUntilChanged()
@@ -83,17 +98,6 @@ final class PhotoSearchViewController: BaseViewController {
         
         viewModel.navigationTitle
             .bind(to: self.rx.title)
-            .disposed(by: disposeBag)
-        
-        viewModel.photos
-            .withUnretained(self)
-            .bind { viewController, photos in
-                self.loadingView.stopAnimating() // 로딩 애니메이션 종료
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
-                snapshot.appendSections([0])
-                snapshot.appendItems(photos)
-                viewController.diffableDataSource?.apply(snapshot, animatingDifferences: true)
-            }
             .disposed(by: disposeBag)
         
         // 로딩 애니메이션 시작

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1EA4117B29938532008C48D3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA4117A29938532008C48D3 /* AppDelegate.swift */; };
 		1EA4117D29938532008C48D3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA4117C29938532008C48D3 /* SceneDelegate.swift */; };
-		1EA4117F29938532008C48D3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA4117E29938532008C48D3 /* ViewController.swift */; };
 		1EA4118429938534008C48D3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1EA4118329938534008C48D3 /* Assets.xcassets */; };
 		1EA4118729938534008C48D3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1EA4118529938534008C48D3 /* LaunchScreen.storyboard */; };
 		1EA4118F299385E2008C48D3 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 1EA4118E299385E2008C48D3 /* .gitignore */; };
@@ -49,7 +48,6 @@
 		1EA4117729938532008C48D3 /* Unsplash_Project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unsplash_Project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1EA4117A29938532008C48D3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1EA4117C29938532008C48D3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1EA4117E29938532008C48D3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1EA4118329938534008C48D3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1EA4118629938534008C48D3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1EA4118829938534008C48D3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -124,7 +122,6 @@
 				1EA411992993979B008C48D3 /* Core */,
 				1EA411962993973C008C48D3 /* Presentation */,
 				1EA4119329938873008C48D3 /* Application */,
-				1EA4117E29938532008C48D3 /* ViewController.swift */,
 				1EA4118329938534008C48D3 /* Assets.xcassets */,
 				1EA4118529938534008C48D3 /* LaunchScreen.storyboard */,
 				1EA4118829938534008C48D3 /* Info.plist */,
@@ -407,7 +404,6 @@
 				1EA411C729954AD4008C48D3 /* Photo.swift in Sources */,
 				1EA411D2299563A5008C48D3 /* PhotoSearchViewModel.swift in Sources */,
 				1EA411BF2994B368008C48D3 /* UnsplashService.swift in Sources */,
-				1EA4117F29938532008C48D3 /* ViewController.swift in Sources */,
 				1EA411E92998C495008C48D3 /* PhotoCell.swift in Sources */,
 				1EA411ED299BC789008C48D3 /* PhotoSearchViewController.swift in Sources */,
 				1EA41195299389D9008C48D3 /* MainCoordinator.swift in Sources */,

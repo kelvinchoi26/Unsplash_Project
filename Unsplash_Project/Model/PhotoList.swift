@@ -15,7 +15,4 @@ struct PhotoList: Codable {
         case id
         case urls
     }
-//    var toPhoto() -> [Photo] {
-//        return Photo(id: id, url: URL)
-//    }
 }

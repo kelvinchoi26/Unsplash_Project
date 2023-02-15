@@ -12,9 +12,9 @@ struct PhotoSearchResponseDTO: Decodable {
     let totalPages: Int
     let results: [Result]
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case total
-        case totalPages
+        case totalPages = "total_pages"
         case results
     }
     
@@ -35,4 +35,3 @@ extension PhotoSearchResponseDTO {
         }
     }
 }
-
