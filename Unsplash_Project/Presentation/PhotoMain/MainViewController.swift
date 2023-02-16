@@ -16,7 +16,6 @@ final class MainViewController: BaseViewController {
     private let viewModel = PhotoListViewModel()
     private var diffableDataSource: UICollectionViewDiffableDataSource<Int, Photo>?
     private var loadingView: UIActivityIndicatorView = UIActivityIndicatorView(style: .large)
-    
     private lazy var collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: self.createLayout()
@@ -70,8 +69,6 @@ final class MainViewController: BaseViewController {
     
     // MARK: - Bind
     override func bind() {
-        super.bind()
-        
         let input = PhotoListViewModel.Input(searchButtonTap: searchBarButtonItem.rx.tap)
         let output = viewModel.transform(input: input)
         
@@ -80,10 +77,16 @@ final class MainViewController: BaseViewController {
             .drive(onNext: { [weak self] photos in
                 guard let self = self else { return }
                 self.loadingView.stopAnimating() // 로딩 애니메이션 종료
-                var snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
-                snapshot.appendSections([0])
-                snapshot.appendItems(photos)
-                self.diffableDataSource?.apply(snapshot, animatingDifferences: true)
+                
+                var snapshot = self.diffableDataSource?.snapshot()
+
+                if snapshot == nil {
+                    snapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
+                    snapshot?.appendSections([0])
+                }
+                
+                snapshot?.appendItems(photos)
+                self.diffableDataSource?.apply(snapshot ?? NSDiffableDataSourceSnapshot<Int, Photo>(), animatingDifferences: true)
             })
             .disposed(by: disposeBag)
         
@@ -100,7 +103,6 @@ final class MainViewController: BaseViewController {
                 vc.pushSearchVC()
             }
             .disposed(by: disposeBag)
-        
     }
 
 }
@@ -140,5 +142,9 @@ extension MainViewController {
             cell.imageView.kf.setImage(with: photo.url)
             return cell
         }
+        
+        var initialSnapshot = NSDiffableDataSourceSnapshot<Int, Photo>()
+        initialSnapshot.appendSections([0])
+        diffableDataSource?.apply(initialSnapshot, animatingDifferences: false)
     }
 }
