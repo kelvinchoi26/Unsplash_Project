@@ -12,6 +12,8 @@
 - RxSwift, MVVM(Input/Output Pattern), Alamofire(DTO)
 - SwiftLint, Coordinator Pattern, CollectionView(Compositional Layout), Kingfisher
 
+***
+
 ## 👾 개발 사항
 
 - **Input/Output Pattern:** ViewModel의 transfrom 메서드를 통해 View의 입력값들을 Output 구조체로 반환해서 View에 적용
@@ -21,6 +23,8 @@
     - API fetching 진행 시 로딩 중임을 알리는 indicator 화면에 표시
 - **SwiftLint**를 활용해 일관된 스타일로 코드 작성
 - **Coordinator Pattern**을 활용한 화면 전환 관리
+
+***
 
 ## 회고 / 트러블 슈팅
 
@@ -43,6 +47,8 @@
 - 직접 짠 코드들에 대해 이해하기 쉽고 관리하기가 용이했음
 - 메모리 관리 차원에서 발생할 수 있는 문제를 예방
     - ex. 코드 들여쓰기, delegate 프로퍼티 선언 시 순환참조에 대한 경고, 옵셔널 강제 해제 연산자 사용 시 경고
+
+***
 
 ## 개발 상세
 
@@ -100,7 +106,7 @@
         func start()
     }
     ```
-    
+***   
 
 ## **📊 앱 기능 설명**
 
