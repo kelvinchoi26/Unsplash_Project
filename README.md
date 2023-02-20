@@ -36,3 +36,80 @@
 - 통신 데이터 구조 추상화
     - **유연한 설계 가능**, **코드의 간결성**
 - 뷰모델처럼 DTO로 분리되면 **유닛테스트**가 편해진다는 것을 느낌
+
+### 🧰 SwiftLint & Mark 주석 활용
+
+- 일관된 스타일로 코드 작성이 가능했음
+- 직접 짠 코드들에 대해 이해하기 쉽고 관리하기가 용이했음
+- 메모리 관리 차원에서 발생할 수 있는 문제를 예방
+    - ex. 코드 들여쓰기, delegate 프로퍼티 선언 시 순환참조에 대한 경고, 옵셔널 강제 해제 연산자 사용 시 경고
+
+## 개발 상세
+
+- RxSwift + 비동기 프로그래밍
+    - 여러 operator들을 활용해 간결한 코드를 작성하고 다양한 기능들을 구현함
+    
+    ```swift
+    searchBar.rx.text.orEmpty
+    		.debounce(.seconds(1), scheduler: MainScheduler.instance)
+        .distinctUntilChanged()
+        .asDriver(onErrorJustReturn: "")
+        .drive { [weak self] query in
+    		    self?.viewModel.fetchSearchedPhotos(query: query, page: self?.viewModel.page ?? 0)
+        }
+        .disposed(by: disposeBag)
+    ```
+    
+    - **debounce**: 검색 api 네트워크 처리를 1초 늦춰 한 번에 과도한 네트워크 요청을 방지
+    - **distinctUntilChanged**: 사용자가 같은 검색값을 여러 번 입력하는 것을 방지
+    - **asDriver(onErrorJustReturn: "")**: Main Thread에서의 실행을 보장하는 driver를 활용하여 네트워크 통신 에러가 발생해도 UI에는 영향 없이 empty string를 반환함
+    - **drive**: driver가 fetchSearchedPhotos에 바인딩되어 검색을 진행할 때 마다 검색 액션을 감지하여 클로져에 포함된 코드를 실행하게 됨
+- XCTest를 통한 Unit Test 맛보기
+    - **XCTAssertGreaterThan(photos.count, 0**)를 통해 검색한 사진들이 제대로 화면에 출력됐는지 테스트
+    
+    ```swift
+    func testFetchSearchedPhotos() {
+    		let expectation = self.expectation(description: "Fetch searched photos successfully")
+        let query = "cat"
+        let page = 1
+            
+        viewModel.fetchSearchedPhotos(query: query, page: page)
+            
+        viewModel.photos.subscribe(onNext: { photos in
+            XCTAssertGreaterThan(photos.count, 0)
+            expectation.fulfill()
+        }).disposed(by: disposeBag)
+            
+        waitForExpectations(timeout: 5, handler: nil)
+    }
+    ```
+    
+- Coordinator Pattern을 활용한 화면 전환 관리
+    - 기존 Grind 앱 개발 시 화면 전환 로직 수정을 위해 ViewController 코드를 일일이 수정하는 것이 번거로웠음
+    - 아래의 Coordinator Pattern 프로토콜 채택하여, ViewController 코드로부터 화면 전환 로직을 분리
+    - 결론적으로 재사용이 편하고 화면 전환을 테스트하기 편하다는 것을 느낌
+        - 물론 더 복잡하고 화면 전환이 많은 앱에서 더 유용할 것 같음
+    
+    ```swift
+    // Coordinator 추상화, AnyObject을 상속받아 class만 채택할 수 있게 제한
+    protocol Coordinator: AnyObject {
+        var childCoordinators: [Coordinator] { get set }
+        var navigationController: UINavigationController { get set }
+        
+        // 화면 전환 로직 역할 수행
+        func start()
+    }
+    ```
+    
+
+## **📊 앱 기능 설명**
+
+**[메인 화면]**
+
+- Compositional Layout + Diffable DataSource로 구현된 CollectionView에 fetch된 사진들 출력
+- 검색 버튼 누르면 사진 검색 화면으로 이동
+
+**[검색 화면]**
+
+- Unsplash의 Search API를 통해 검색된 사진들 CollectionView에 출력
+- 화면 끝까지 scroll시 새로운 10장의 사진 추가로 출력 (pagination)
